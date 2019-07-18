@@ -76,13 +76,17 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
         } 
     }
 });
- 
-$app->get('/pushmessage', function($req, $res) use ($bot)
+
+$app->get('/multicast', function($req, $res) use ($bot)
 {
-    // send push message to user
-    $userId = 'U7d9a8d118cf1ec1dcbf9d0ab3fdf28a4';
-    $textMessageBuilder = new TextMessageBuilder('Halo, ini pesan push');
-    $result = $bot->pushMessage($userId, $textMessageBuilder);
+    // list of users
+    $userList = [
+        'cupu10'
+    ];
+ 
+    // send multicast message to user
+    $textMessageBuilder = new TextMessageBuilder('Halo, ini pesan multicast');
+    $result = $bot->multicast($userList, $textMessageBuilder);
    
     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
 });
