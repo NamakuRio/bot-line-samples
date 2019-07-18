@@ -7,6 +7,7 @@ use \LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
 use \LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use \LINE\LINEBot\MessageBuilder\StickerMessageBuilder;
 use \LINE\LINEBot\SignatureValidator as SignatureValidator;
+use \LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
  
 // set false for production
 $pass_signature = true;
@@ -63,12 +64,21 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                 if($event['message']['type'] == 'text')
                 {
                     // send same message as reply to user
-                    $result = $bot->replyText($event['replyToken'], $event['message']['text']);
+                    // $result = $bot->replyText($event['replyToken'], $event['message']['text']);
                     // $result = $bot->replyText($event['replyToken'], 'ini pesan balasan');
     
                     // or we can use replyMessage() instead to send reply message
                     // $textMessageBuilder = new TextMessageBuilder($event['message']['text']);
                     // $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
+                    $textMessageBuilder1 = new TextMessageBuilder('ini pesan balasan pertama');
+                    $textMessageBuilder2 = new TextMessageBuilder('ini pesan balasan kedua');
+                    $stickerMessageBuilder = new StickerMessageBuilder(1, 106);
+                    
+                    $multiMessageBuilder = new MultiMessageBuilder();
+                    $multiMessageBuilder->add($textMessageBuilder1);
+                    $multiMessageBuilder->add($textMessageBuilder2);
+                    $multiMessageBuilder->add($stickerMessageBuilder);
+                    $result = $bot->replyText($event['replyToken'], $multiMessageBuilder);
     
                     return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                 }
