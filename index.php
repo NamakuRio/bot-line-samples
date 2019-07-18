@@ -81,7 +81,7 @@ $app->get('/multicast', function($req, $res) use ($bot)
 {
     // list of users
     $userList = [
-        'cupu10'
+        'U7d9a8d118cf1ec1dcbf9d0ab3fdf28a4'
     ];
  
     // send multicast message to user
