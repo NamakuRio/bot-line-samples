@@ -101,4 +101,23 @@ $app->get('/multicast', function($req, $res) use ($bot)
     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
 });
 
+$app->get('/profile', function($req, $res) use ($bot)
+{
+    // get user profile
+    $userId = 'U7d9a8d118cf1ec1dcbf9d0ab3fdf28a4';
+    $result = $bot->getProfile($userId);
+   
+    return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+});
+
+$app->get('/profile/{userId}', function($req, $res) use ($bot)
+{
+    // get user profile
+    $route  = $req->getAttribute('route');
+    $userId = $route->getArgument('userId');
+    $result = $bot->getProfile($userId);
+             
+    return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+});
+
 $app->run();
